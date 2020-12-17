@@ -8,8 +8,7 @@ import (
 )
 
 func NewDatabase(conf *Config) *sql.DB {
-	source := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", conf.DatabaseUser, conf.DatabasePass, conf.DatabaseHost, conf.DatabasePort, conf.DatabaseName)
-	fmt.Println(source)
+	source := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true", conf.DB_USER, conf.DB_PASS, conf.DB_HOST, conf.DB_PORT, conf.DB_NAME)
 	db, err := sql.Open("mysql", source)
 	if err = db.Ping(); err != nil {
 		panic(err)

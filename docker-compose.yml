@@ -1,0 +1,23 @@
+version: "3"
+services:
+  app:
+    container_name: server
+    build: . 
+    restart: always
+    ports:
+      - 9090:9090
+    environment:
+      - SERVER_PORT=9090
+      - DB_HOST=mysql-server
+      - DB_PORT=3306
+      - DB_USER=root
+      - DB_PASS=password123
+      - DB_NAME=db_product
+  
+  mysql:
+    image: mysql:8.0
+    container_name: mysql-server
+    environment:
+      - MYSQL_ROOT_PASSWORD=password123
+    volumes:
+      - ./product.sql:/docker-entrypoint-initdb.d/product.sql

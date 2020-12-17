@@ -8,7 +8,7 @@ import (
 )
 
 func SendErrorResponse(msg string, code int, w http.ResponseWriter) {
-	w.Header().Set("COntent-Type", "application/json")
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(code)
 	byteData, err := json.Marshal(model.Response{
 		Message: msg,
@@ -20,7 +20,7 @@ func SendErrorResponse(msg string, code int, w http.ResponseWriter) {
 	w.Write(byteData)
 }
 func SendSuccessResponse(msg string, code int, data interface{}, w http.ResponseWriter) {
-	w.Header().Set("COntent-Type", "application/json")
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(code)
 	byteData, err := json.Marshal(model.Response{
 		Message: msg,

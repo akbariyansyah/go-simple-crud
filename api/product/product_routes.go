@@ -14,10 +14,10 @@ func NewProductRoutes(r *mux.Router, db *sql.DB) {
 	r.HandleFunc("/test", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprintln(w, "Hello world")
 	})
-	r.HandleFunc("/", controller.GetAllProducts).Methods(http.MethodGet)
-	r.HandleFunc("/:id", controller.GetProductByID).Methods(http.MethodGet)
-	r.HandleFunc("/", controller.CreateProduct).Methods(http.MethodPost)
-	r.HandleFunc("/", controller.UpdateProduct).Methods(http.MethodPut)
-	r.HandleFunc("/:id", controller.DeleteProduct).Methods(http.MethodDelete)
+	r.HandleFunc("/product", controller.GetAllProducts).Methods(http.MethodGet)
+	r.HandleFunc("/product/{id}", controller.GetProductByID).Methods(http.MethodGet)
+	r.HandleFunc("/product", controller.CreateProduct).Methods(http.MethodPost)
+	r.HandleFunc("/product", controller.UpdateProduct).Methods(http.MethodPut)
+	r.HandleFunc("/product/{id}", controller.DeleteProduct).Methods(http.MethodDelete)
 
 }

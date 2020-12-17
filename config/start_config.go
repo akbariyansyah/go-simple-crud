@@ -1,29 +1,47 @@
 package config
 
-// import "os"
+import (
+	"go-simple-crud/utils"
+	"log"
+	"net/http"
+	"os"
+
+	"github.com/gorilla/mux"
+)
 
 type Config struct {
-	DatabaseHost string
-	DatabasePort string
-	DatabaseUser string
-	DatabasePass string
-	DatabaseName string
+	DB_HOST string
+	DB_PORT string
+	DB_USER string
+	DB_PASS string
+	DB_NAME string
 }
 
+func StartServer(router *mux.Router) {
+	log.Fatal(http.ListenAndServe(":9090", router))
+}
 func StartConfig() *Config {
-	// conf := &Config{
-	// 	DatabaseHost: os.Getenv("DB_HOST"),
-	// 	DatabasePort: os.Getenv("DB_PORT"),
-	// 	DatabaseUser: os.Getenv("DB_USER"),
-	// 	DatabasePass: os.Getenv("DB_PASS"),
-	// 	DatabaseName: os.Getenv("DB_NAME"),
-	// }
-	conf := &Config{
-		DatabaseHost: "localhost",
-		DatabasePort: "3306",
-		DatabaseUser: "root",
-		DatabasePass: "password123",
-		DatabaseName: "db_product",
+	conf := &Config{}
+
+	conf.DB_HOST = os.Getenv("DB_HOST")
+	if os.Getenv("DB_HOST") == "" {
+		conf.DB_HOST = utils.ReadConfig("database.host")
+	}
+	conf.DB_PORT = os.Getenv("DB_PORT")
+	if os.Getenv("DB_HOST") == "" {
+		conf.DB_PORT = utils.ReadConfig("database.port")
+	}
+	conf.DB_USER = os.Getenv("DB_USER")
+	if os.Getenv("DB_HOST") == "" {
+		conf.DB_USER = utils.ReadConfig("database.user")
+	}
+	conf.DB_PASS = os.Getenv("DB_PASS")
+	if os.Getenv("DB_HOST") == "" {
+		conf.DB_PASS = utils.ReadConfig("database.pass")
+	}
+	conf.DB_NAME = os.Getenv("DB_NAME")
+	if os.Getenv("DB_NAME") == "" {
+		conf.DB_NAME = utils.ReadConfig("database.name")
 	}
 	return conf
 }

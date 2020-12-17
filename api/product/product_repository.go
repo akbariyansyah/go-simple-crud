@@ -23,12 +23,14 @@ func (r Repository) getAllProducts(keyword string) (*[]model.Product, error) {
 
 	rows, err := r.db.Query("select * from m_product")
 	if err != nil {
+		log.Println(err)
 		return nil, err
 	}
 	for rows.Next() {
 		product := new(model.Product)
-		err := rows.Scan(product.ID, product.Name, product.Price, product.Quantity, product.CreateAt, product.UpdateAt)
+		err := rows.Scan(&product.ID, &product.Name, &product.Price, &product.Quantity, &product.CreateAt, &product.UpdateAt)
 		if err != nil {
+			log.Println(err)
 			return nil, err
 		}
 		products = append(products, *product)
@@ -49,7 +51,7 @@ func (r Repository) getProductByID(id string) (*model.Product, error) {
 		log.Println(err)
 		return nil, err
 	}
-	_, err = stmt.Exec(id)
+	err = stmt.QueryRow(id).Scan(&p.ID, &p.Name, &p.Price, &p.Quantity, &p.CreateAt, &p.UpdateAt)
 	if err != nil {
 		tx.Rollback()
 		log.Println(err)
@@ -65,13 +67,13 @@ func (r Repository) createProduct(product *model.Product) error {
 		log.Println(err)
 		return err
 	}
-	stmt, err := tx.Prepare("insert into m_product(id,name,price,quantity,createdAt,updatedAt) values(?,?,?,?,?,?)")
+	stmt, err := tx.Prepare("insert into m_product(id,name,price,quantity,created_at,updated_at) values(?,?,?,?,current_timestamp,current_timestamp)")
 	if err != nil {
 		tx.Rollback()
 		log.Println(err)
 		return err
 	}
-	_, err = stmt.Exec(product.ID, product.Name, product.Price, product.Quantity, product.CreateAt, product.UpdateAt)
+	_, err = stmt.Exec(product.ID, product.Name, product.Price, product.Quantity)
 	if err != nil {
 		tx.Rollback()
 		log.Println(err)
@@ -87,7 +89,7 @@ func (r Repository) updateProduct(product *model.Product) error {
 		log.Println(err)
 		return err
 	}
-	stmt, err := tx.Prepare("update m_product set name=?,price=?,quantity=?,update_at=current_timestamp where id =?")
+	stmt, err := tx.Prepare("update m_product set name=?,price=?,quantity=?,updated_at=current_timestamp where id =?")
 	if err != nil {
 		tx.Rollback()
 		log.Println(err)
@@ -109,7 +111,7 @@ func (r Repository) deleteProduct(id string) error {
 		log.Println(err)
 		return err
 	}
-	stmt, err := tx.Prepare("delete * from m_product where id = ?")
+	stmt, err := tx.Prepare("delete from m_product where id = ?")
 	if err != nil {
 		tx.Rollback()
 		log.Println(err)
