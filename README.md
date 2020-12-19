@@ -11,5 +11,5 @@
 
 2. Docker
 
-* type command "docker-compose -f docker-compose.yaml up -d"
+* type command "docker-compose -f docker-compose.yml up -d"
 
