@@ -18,7 +18,15 @@ type Config struct {
 }
 
 func StartServer(router *mux.Router) {
-	log.Fatal(http.ListenAndServe(":9090", router))
+	
+	port := os.Getenv("SERVER_PORT")
+
+	if port == "" {
+		port = utils.ReadConfig("server.port")
+	}
+	log.Printf("Server is starting at port %s", port)
+
+	log.Fatal(http.ListenAndServe(":"+port, router))
 }
 func StartConfig() *Config {
 	conf := &Config{}
