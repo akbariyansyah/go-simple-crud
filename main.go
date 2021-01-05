@@ -10,11 +10,11 @@ import (
 func main() {
 
 	router := mux.NewRouter()
-
+	
 	conf := config.StartConfig()
 	
 	db := config.NewDatabase(conf)
-
+	
 	product.NewProductRoutes(router, db)
 
 	config.StartServer(router)

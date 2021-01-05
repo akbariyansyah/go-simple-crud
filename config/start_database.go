@@ -3,8 +3,9 @@ package config
 import (
 	"database/sql"
 	"fmt"
-	_ "github.com/go-sql-driver/mysql"
 	"log"
+
+	_ "github.com/go-sql-driver/mysql"
 )
 
 func NewDatabase(conf *Config) *sql.DB {
@@ -13,6 +14,7 @@ func NewDatabase(conf *Config) *sql.DB {
 	if err = db.Ping(); err != nil {
 		panic(err)
 	}
+	
 	db.SetMaxOpenConns(10)
 	db.SetMaxIdleConns(10)
 	log.Println("Database is starting ...")

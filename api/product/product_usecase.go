@@ -24,6 +24,7 @@ func (p *ProductUsecase) getAllProducts(keyword string) (*[]model.Product, error
 	if err != nil {
 		return nil, err
 	}
+
 	return products, nil
 }
 

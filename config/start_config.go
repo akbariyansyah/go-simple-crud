@@ -36,15 +36,15 @@ func StartConfig() *Config {
 		conf.DB_HOST = utils.ReadConfig("database.host")
 	}
 	conf.DB_PORT = os.Getenv("DB_PORT")
-	if os.Getenv("DB_HOST") == "" {
+	if os.Getenv("DB_PORT") == "" {
 		conf.DB_PORT = utils.ReadConfig("database.port")
 	}
 	conf.DB_USER = os.Getenv("DB_USER")
-	if os.Getenv("DB_HOST") == "" {
+	if os.Getenv("DB_USER") == "" {
 		conf.DB_USER = utils.ReadConfig("database.user")
 	}
 	conf.DB_PASS = os.Getenv("DB_PASS")
-	if os.Getenv("DB_HOST") == "" {
+	if os.Getenv("DB_PASS") == "" {
 		conf.DB_PASS = utils.ReadConfig("database.pass")
 	}
 	conf.DB_NAME = os.Getenv("DB_NAME")
